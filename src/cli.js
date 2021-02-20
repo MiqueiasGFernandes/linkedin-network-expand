@@ -10,6 +10,8 @@ program
   .usage('[options] [-u email] [-p password]')
   .option('-u, --email <linkedin_handle>', 'provide your LinkedIn handle i.e. email or phone number')
   .option('-p, --password <linkedin_password>', 'provide your LinkedIn password')
+  .option('-m, --max-invites <number_of_invites_to_send>', 'number of limit to send invites (default: 50)')
+  .option('-k, --keywords <keywords_to_search>', 'keyworks')
   .option('--no-verbose', 'keep your console clean')
   .parse(process.argv);
 
@@ -46,9 +48,7 @@ prompt.start();
 
 prompt.get(schema, (err, result) => {
   if (err) {
-    console.error('canceled');
     process.exit(0);
-    return;
   }
 
   email = result.email || email;
