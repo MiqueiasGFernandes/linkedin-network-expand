@@ -7,6 +7,8 @@
     "lac": "lib/cli.js"
   },
   "scripts": {
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "npm lint -- --fix",
     "test": "jest --passWithNoTests --no-cache",
     "test:ci": "npm test -- --coverage",
     "build": "babel src -d lib",
