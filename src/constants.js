@@ -62,6 +62,7 @@ module.exports = {
   urls,
   headers,
   fetchingPeoplesCount: 50,
+  defaultMaximumInviteNumber: 50,
   requestInterval: 0,
   peopleProfileType: 'com.linkedin.voyager.identity.shared.MiniProfile',
 };
