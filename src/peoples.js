@@ -4,7 +4,7 @@ const constants = require('./constants');
 
 function fetch(sessionCookies, count) {
   return makeReqPYMKGET(sessionCookies, count)
-    .then(data => normalize(data));
+    .then((data) => normalize(data));
 }
 
 function makeReqPYMKGET(cookies, count) {
@@ -30,7 +30,7 @@ function makeReqPYMKGET(cookies, count) {
   };
 
   return axios.get(constants.urls.peopleYouMayKnow, reqConfig)
-    .then(response => response.data);
+    .then((response) => response.data);
 }
 
 function normalize(data) {

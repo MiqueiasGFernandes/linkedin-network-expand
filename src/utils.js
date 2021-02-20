@@ -34,14 +34,14 @@ function parseSingleCookie(cookieStr) {
 }
 
 function stringifyCookies(cookiePairs) {
-  return Object.keys(cookiePairs).map(cookieName => `${cookieName}=${cookiePairs[cookieName]}`).join('; ');
+  return Object.keys(cookiePairs).map((cookieName) => `${cookieName}=${cookiePairs[cookieName]}`).join('; ');
 }
 
 function fetchCookies(url, method, config) {
   const reqConfig = { url, method, ...config };
 
   return axios.request(reqConfig)
-    .then(response => parseToCookieKeyValuePairs(response.headers['set-cookie']));
+    .then((response) => parseToCookieKeyValuePairs(response.headers['set-cookie']));
 }
 
 function trim(str, chr) {

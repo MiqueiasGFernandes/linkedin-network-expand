@@ -7,7 +7,7 @@ const urls = {
 
 const headers = {
   loginGET: {
-    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+    accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
     'accept-encoding': 'gzip, deflate, br',
     'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
     'upgrade-insecure-requests': '1',
@@ -15,25 +15,25 @@ const headers = {
   },
 
   loginSubmitPOST: {
-    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+    accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
     'accept-encoding': 'gzip, deflate, br',
     'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
     'cache-control': 'no-cache',
     'content-type': 'application/x-www-form-urlencoded',
-    'origin': 'https://www.linkedin.com',
-    'pragma': 'no-cache',
-    'referer': 'https://www.linkedin.com/uas/login',
+    origin: 'https://www.linkedin.com',
+    pragma: 'no-cache',
+    referer: 'https://www.linkedin.com/uas/login',
     'upgrade-insecure-requests': '1',
     'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
   },
 
   peopleYouMayKnowGET: {
-    'accept': 'application/vnd.linkedin.normalized+json',
+    accept: 'application/vnd.linkedin.normalized+json',
     'accept-encoding': 'gzip, deflate, br',
     'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
     'cache-control': 'no-cache',
-    'pragma': 'no-cache',
-    'referer': 'https://www.linkedin.com/mynetwork/',
+    pragma: 'no-cache',
+    referer: 'https://www.linkedin.com/mynetwork/',
     'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
     'x-li-lang': 'en_US',
     'x-li-track': '{"clientVersion":"1.1.*","osName":"web","timezoneOffset":5.5,"deviceFormFactor":"DESKTOP","mpName":"voyager-web"}',
@@ -42,14 +42,14 @@ const headers = {
   },
 
   normInvitationsPOST: {
-    'accept': 'text/plain, */*; q=0.01',
+    accept: 'text/plain, */*; q=0.01',
     'accept-encoding': 'gzip, deflate, br',
     'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
     'cache-control': 'no-cache',
     'content-type': 'application/json; charset=UTF-8',
-    'origin': 'https://www.linkedin.com',
-    'pragma': 'no-cache',
-    'referer': 'https://www.linkedin.com/mynetwork/',
+    origin: 'https://www.linkedin.com',
+    pragma: 'no-cache',
+    referer: 'https://www.linkedin.com/mynetwork/',
     'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
     'x-li-lang': 'en_US',
     'x-li-track': '{"clientVersion":"1.1.*","osName":"web","timezoneOffset":5.5,"deviceFormFactor":"DESKTOP","mpName":"voyager-web"}',
