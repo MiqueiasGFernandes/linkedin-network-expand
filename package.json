@@ -7,7 +7,7 @@
     "lac": "lib/cli.js"
   },
   "scripts": {
-    "test":"jest --passWithNoTests --no-cache",
+    "test": "jest --passWithNoTests --no-cache",
     "test:ci": "npm test -- --coverage",
     "build": "babel src -d lib",
     "start": "node src/cli.js"
