@@ -62,7 +62,9 @@
     "babel-preset-env": "^1.6.1",
     "eslint": "^4.15.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0"
+    "eslint-plugin-import": "^2.8.0",
+    "git-commit-msg-linter": "^3.0.0",
+    "husky": "^5.0.9"
   },
   "engines": {
     "node": ">=4.0.0"
