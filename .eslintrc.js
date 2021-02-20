@@ -12,5 +12,8 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'no-param-reassing': 'off',
+    'no-console': 'off',
+    'no-param-reassign': 'off',
   },
 };
