@@ -1,18 +1,20 @@
 {
-  "name": "linkedin-auto-connect",
-  "version": "1.1.0",
-  "description": "An automation tool to automate the connection requests on LinkedIn",
+  "name": "linkedin-network-expand",
+  "version": "1.0.0",
+  "description": "Simples linkedin tool to expand your network. Tool based in linkedin-auto-connect repository",
   "bin": {
     "linkedin-auto-connect": "lib/cli.js",
     "lac": "lib/cli.js"
   },
   "scripts": {
+    "test":"jest --passWithNoTests --no-cache",
+    "test:ci": "npm test -- --coverage",
     "build": "babel src -d lib",
-    "start": "node src/cli.js -u ariyankhan46@gmail.com"
+    "start": "node src/cli.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rousan/linkedin-auto-connect.git"
+    "url": "https://github.com/MiqueiasGFernandes/linkedin-network-expand.git"
   },
   "keywords": [
     "linkedin",
@@ -42,12 +44,12 @@
     "npm",
     "console"
   ],
-  "author": "Rousan Ali <rousanali786@gmail.com> (https://rousan.io)",
+  "author": "Miquéias Fernandes <miqueiasfernandes.dev@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rousan/linkedin-auto-connect/issues"
+    "url": "https://github.com/MiqueiasGFernandes/linkedin-network-expand/issues"
   },
-  "homepage": "https://github.com/rousan/linkedin-auto-connect#readme",
+  "homepage": "https://github.com/MiqueiasGFernandes/linkedin-network-expand#readme",
   "dependencies": {
     "axios": "^0.21.1",
     "colors": "^1.1.2",
