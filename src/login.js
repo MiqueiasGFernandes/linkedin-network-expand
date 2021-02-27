@@ -2,9 +2,8 @@ const querystring = require('querystring');
 const constants = require('./constants');
 const utils = require('./utils');
 
-function sessionCookies(email, password) {
-  return makeReqLoginGET()
-    .then((cookies) => makeReqLoginPOST(email, password, cookies));
+function validateStatusForURLRedirection(status) {
+  return status >= 200 && (status < 300 || status === 302);
 }
 
 function makeReqLoginGET() {
@@ -42,8 +41,9 @@ function makeReqLoginPOST(email, password, cookies) {
     .then((cookieUpdates) => ({ ...cookies, ...cookieUpdates }));
 }
 
-function validateStatusForURLRedirection(status) {
-  return status >= 200 && (status < 300 || status === 302);
+function sessionCookies(email, password) {
+  return makeReqLoginGET()
+    .then((cookies) => makeReqLoginPOST(email, password, cookies));
 }
 
 module.exports = {

@@ -2,18 +2,12 @@ const axios = require('axios');
 const wordWrap = require('word-wrap');
 const moment = require('moment');
 
-function parseToCookieKeyValuePairs(cookieHeaders) {
-  return cookieHeaders.reduce((keyValuePairs, cookie) => {
-    const cookieInfo = parseSingleCookie(cookie);
-    if (!isDeletedCookie(cookieInfo)) {
-      keyValuePairs[cookieInfo.key] = cookieInfo.value;
-    }
-    return keyValuePairs;
-  }, {});
-}
-
 function isDeletedCookie(cookieInfo) {
   return cookieInfo.value.indexOf('delete') !== -1;
+}
+
+function escapeRegExp(str) {
+  return str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
 }
 
 function parseSingleCookie(cookieStr) {
@@ -25,12 +19,22 @@ function parseSingleCookie(cookieStr) {
   cookieInfo.key = pair.substr(0, eqIdx).trim();
   cookieInfo.value = pair.substr(eqIdx + 1, pair.length).trim();
 
-  for (let i = 1; i < parts.length; ++i) {
+  for (let i = 1; i < parts.length; i += 1) {
     const partPair = parts[i].trim().split('=');
-    if (partPair.length < 2) { continue; }
+    if (partPair.length < 2) continue;
     cookieInfo[partPair[0].trim()] = partPair[1].trim();
   }
   return cookieInfo;
+}
+
+function parseToCookieKeyValuePairs(cookieHeaders) {
+  return cookieHeaders.reduce((keyValuePairs, cookie) => {
+    const cookieInfo = parseSingleCookie(cookie);
+    if (!isDeletedCookie(cookieInfo)) {
+      keyValuePairs[cookieInfo.key] = cookieInfo.value;
+    }
+    return keyValuePairs;
+  }, {});
 }
 
 function stringifyCookies(cookiePairs) {
@@ -47,10 +51,6 @@ function fetchCookies(url, method, config) {
 function trim(str, chr) {
   const regex = new RegExp(`(?:^${escapeRegExp(chr)}+)|(?:${escapeRegExp(chr)}+$)`, 'g');
   return str.replace(regex, '');
-}
-
-function escapeRegExp(str) {
-  return str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
 }
 
 const currentPrintStream = process.stderr;

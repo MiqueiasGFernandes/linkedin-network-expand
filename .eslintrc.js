@@ -15,5 +15,6 @@ module.exports = {
     'no-param-reassing': 'off',
     'no-console': 'off',
     'no-param-reassign': 'off',
+    'no-continue': 'off',
   },
 };

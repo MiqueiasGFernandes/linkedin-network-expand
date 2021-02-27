@@ -7,9 +7,40 @@ const utils = require('./utils');
 
 let credentials;
 
-function start(email, password) {
-  storeCredentials(email, password);
-  startScraping();
+function storeCredentials(email, password) {
+  credentials = { email, password };
+}
+
+function onError(err) {
+  let errMsg;
+  if (err.response) {
+    const statusCode = err.response.status;
+    if (statusCode === 401 || statusCode === 403) {
+      errMsg = 'incorrect authentication';
+    } else {
+      errMsg = err.message;
+    }
+  } else if (err.request) {
+    errMsg = 'couldn\'t connect to the LinkedIn server';
+  } else {
+    errMsg = err.message;
+  }
+  console.error(`\n  ${colors.red('error')}:   ${errMsg}`);
+}
+
+function fetchNextPeoples(sessionCookies) {
+  peoples.fetch(sessionCookies, constants.fetchingPeoplesCount)
+    .then((fetchedPeople) => {
+      inviter.invite(sessionCookies, fetchedPeople)
+        .then(() => {
+          setTimeout(() => {
+            fetchNextPeoples(sessionCookies);
+          }, constants.requestInterval);
+        });
+    })
+    .catch((err) => {
+      onError(err);
+    });
 }
 
 function startScraping() {
@@ -34,40 +65,9 @@ function startScraping() {
     });
 }
 
-function fetchNextPeoples(sessionCookies) {
-  peoples.fetch(sessionCookies, constants.fetchingPeoplesCount)
-    .then((peoples) => {
-      inviter.invite(sessionCookies, peoples)
-        .then(() => {
-          setTimeout(() => {
-            fetchNextPeoples(sessionCookies);
-          }, constants.requestInterval);
-        });
-    })
-    .catch((err) => {
-      onError(err);
-    });
-}
-
-function storeCredentials(email, password) {
-  credentials = { email, password };
-}
-
-function onError(err) {
-  let errMsg;
-  if (err.response) {
-    const statusCode = err.response.status;
-    if (statusCode === 401 || statusCode === 403) {
-      errMsg = 'incorrect authentication';
-    } else {
-      errMsg = err.message;
-    }
-  } else if (err.request) {
-    errMsg = 'couldn\'t connect to the LinkedIn server';
-  } else {
-    errMsg = err.message;
-  }
-  console.error(`\n  ${colors.red('error')}:   ${errMsg}`);
+function start(email, password) {
+  storeCredentials(email, password);
+  startScraping();
 }
 
 module.exports = { start };

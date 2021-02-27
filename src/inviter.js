@@ -11,79 +11,8 @@ const invitationStatus = {
 let cursorRelYPos;
 let isFirstTime = true;
 
-function invite(sessionCookies, invitees) {
-  let idx = 0;
-  return new Promise((resolve) => {
-    (function func() {
-      if (idx < invitees.length) {
-        makeReqInvitationsPOST(sessionCookies, invitees[idx])
-          .then(() => {
-            func();
-          });
-        idx++;
-      } else {
-        resolve();
-      }
-    }());
-  });
-}
-
-function makeReqInvitationsPOST(cookies, invitee) {
-  const csrfToken = utils.trim(cookies.JSESSIONID, '"');
-
-  const invitationsData = JSON.stringify({
-    excludeInvitations: [],
-    invitations: [],
-    trackingId: invitee.trackingId,
-    invitee: {
-      'com.linkedin.voyager.growth.invitation.InviteeProfile': {
-        profileId: invitee.profileId,
-      },
-    },
-  });
-
-  const headers = {
-    ...constants.headers.normInvitationsPOST,
-    cookie: utils.stringifyCookies(cookies),
-    'csrf-token': csrfToken,
-  };
-
-  const reqConfig = {
-    headers,
-    responseType: 'text',
-  };
-
-  return axios.post(constants.urls.normInvitations, invitationsData, reqConfig)
-    .then(() => {
-      invitationStatus.success++;
-      printInvite(invitee, true, invitationStatus.success, invitationStatus.failed);
-    })
-    .catch((err) => {
-      invitationStatus.failed++;
-      printInvite(invitee, false, invitationStatus.success, invitationStatus.failed);
-
-      const statusCode = err.response.status;
-      if (statusCode === 429) {
-        console.error(`${colors.red('error')}:   too many requests`);
-        process.exit();
-      }
-    });
-}
-
-function printInvite(invitee, isSuccess, successCount, failedCount) {
-  if (!global.verbose) { return; }
-  const isFirstCard = isFirstTime;
-
-  if (isFirstCard) {
-    isFirstTime = false;
-    utils.print('\n');
-    cursorRelYPos = printInviteCard(invitee, isSuccess, successCount, failedCount);
-  } else {
-    readline.cursorTo(utils.currentPrintStream, 0);
-    readline.moveCursor(utils.currentPrintStream, 0, -cursorRelYPos);
-    readline.clearScreenDown(utils.currentPrintStream);
-    cursorRelYPos = printInviteCard(invitee, isSuccess, successCount, failedCount);
-  }
+function inviteeName(invitee) {
+  return utils.resolveNewLines(`${invitee.firstName.trim()} ${invitee.lastName.trim()}`);
 }
 
 function printInviteCard(invitee, isSuccess, successCount, failedCount) {
@@ -125,8 +54,79 @@ function printInviteCard(invitee, isSuccess, successCount, failedCount) {
   return totNewLines;
 }
 
-function inviteeName(invitee) {
-  return utils.resolveNewLines(`${invitee.firstName.trim()} ${invitee.lastName.trim()}`);
+function printInvite(invitee, isSuccess, successCount, failedCount) {
+  if (!global.verbose) { return; }
+  const isFirstCard = isFirstTime;
+
+  if (isFirstCard) {
+    isFirstTime = false;
+    utils.print('\n');
+    cursorRelYPos = printInviteCard(invitee, isSuccess, successCount, failedCount);
+  } else {
+    readline.cursorTo(utils.currentPrintStream, 0);
+    readline.moveCursor(utils.currentPrintStream, 0, -cursorRelYPos);
+    readline.clearScreenDown(utils.currentPrintStream);
+    cursorRelYPos = printInviteCard(invitee, isSuccess, successCount, failedCount);
+  }
+}
+
+function makeReqInvitationsPOST(cookies, invitee) {
+  const csrfToken = utils.trim(cookies.JSESSIONID, '"');
+
+  const invitationsData = JSON.stringify({
+    excludeInvitations: [],
+    invitations: [],
+    trackingId: invitee.trackingId,
+    invitee: {
+      'com.linkedin.voyager.growth.invitation.InviteeProfile': {
+        profileId: invitee.profileId,
+      },
+    },
+  });
+
+  const headers = {
+    ...constants.headers.normInvitationsPOST,
+    cookie: utils.stringifyCookies(cookies),
+    'csrf-token': csrfToken,
+  };
+
+  const reqConfig = {
+    headers,
+    responseType: 'text',
+  };
+
+  return axios.post(constants.urls.normInvitations, invitationsData, reqConfig)
+    .then(() => {
+      invitationStatus.success += invitationStatus.success;
+      printInvite(invitee, true, invitationStatus.success, invitationStatus.failed);
+    })
+    .catch((err) => {
+      invitationStatus.failed += invitationStatus.failed;
+      printInvite(invitee, false, invitationStatus.success, invitationStatus.failed);
+
+      const statusCode = err.response.status;
+      if (statusCode === 429) {
+        console.error(`${colors.red('error')}:   too many requests`);
+        process.exit();
+      }
+    });
+}
+
+function invite(sessionCookies, invitees) {
+  let idx = 0;
+  return new Promise((resolve) => {
+    (function func() {
+      if (idx < invitees.length) {
+        makeReqInvitationsPOST(sessionCookies, invitees[idx])
+          .then(() => {
+            func();
+          });
+        idx += idx;
+      } else {
+        resolve();
+      }
+    }());
+  });
 }
 
 module.exports = {
